@@ -1,0 +1,46 @@
+//Codido del Sensor de Temperatura para el Lab de Proyectos 2 
+//Universidad Simón Bolívar 
+//Daniel Morao Nishimura 13-10932
+//Alejandro Rivas 13-11208
+
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
+////////////////////////////////////////////////
+//Utilizamos el PIN DIgital 2 para leer 
+//PIN 3.3 para alimentar el sensor
+//GND
+//////////////////////////////////////////////
+
+#define DHTPIN 2//Defino el pin digital donde se conecta el sensor
+#define DHTTYPE DHT11 //Dependiendo del Tipo de sensor
+
+DHT  dht(DHTPIN, DHTTYPE); //Inicializar el Sensor DHT11
+
+
+void setup() {
+  //Iniciar el monitor serie
+  Serial.begin(9600);
+  //Comenzar el Sensor DHT
+  dht.begin();
+}
+
+void loop() {
+  //Esperamos 5 segundos entre toma de datos
+  delay(5000);
+  //Leemos la humedad Relativa
+  int h = dht.readHumidity();
+  //Leemos la temperatura en grados Centigrados (por defecto)
+  int t = dht.readTemperature();
+
+  //Comprobamos si hay ocurrido un error en la lectura
+
+
+  Serial.println("Humedad");
+  Serial.println(h);
+  Serial.println("Temperatura:");
+  Serial.println(t);
+  Serial.println("C");
+
+  Serial.write(t);//Mandamos la temperatura 
+  //Serial.write(h);Mandamos la humedad
+}
